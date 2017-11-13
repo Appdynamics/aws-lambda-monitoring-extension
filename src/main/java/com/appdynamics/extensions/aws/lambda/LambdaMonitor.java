@@ -1,14 +1,13 @@
 package com.appdynamics.extensions.aws.lambda;
 
-import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
-
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
-import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.lambda.config.LambdaConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
+
+import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
  * @author Satish Muddam
