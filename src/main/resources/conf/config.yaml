@@ -12,7 +12,10 @@ accounts:
 credentialsDecryptionConfig:
     enableDecryption: "false"
     decryptionKey:
-    
+
+#Metrics will be extracted only from the following lambda functions. Regexes are supported.
+includeLambdaFunctions: [".*"]
+
 proxyConfig:
     host:
     port:
@@ -51,5 +54,5 @@ concurrencyConfig:
   noOfRegionThreadsPerAccount: 3
   noOfMetricThreadsPerRegion: 3
 
-#prefix used to show up metrics in AppDynamics 
-metricPrefix: "Custom Metrics|Amazon Lambda|"
+#prefix used to show metrics in AppDynamics
+metricPrefix: "Server|Component:<TIER_ID>|Custom Metrics|AWS Lambda Monitor|"
