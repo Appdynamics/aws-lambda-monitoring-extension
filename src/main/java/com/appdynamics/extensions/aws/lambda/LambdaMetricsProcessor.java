@@ -1,6 +1,7 @@
 package com.appdynamics.extensions.aws.lambda;
 
 import com.amazonaws.services.cloudwatch.AmazonCloudWatch;
+import com.amazonaws.services.cloudwatch.model.DimensionFilter;
 import com.amazonaws.services.cloudwatch.model.Metric;
 import com.appdynamics.extensions.aws.config.MetricType;
 import com.appdynamics.extensions.aws.metric.NamespaceMetricStatistics;
@@ -8,10 +9,7 @@ import com.appdynamics.extensions.aws.metric.StatisticType;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessorHelper;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -21,23 +19,34 @@ public class LambdaMetricsProcessor implements MetricsProcessor {
 
     private static final String NAMESPACE = "AWS/Lambda";
 
-    private static final String[] DIMENSIONS = {"FunctionName"};
+    private static final String DIMENSIONS = "FunctionName";
 
     private List<MetricType> metricTypes;
 
     private Pattern excludeMetricsPattern;
+    private List<String> includeLambdaFunctions;
 
-    public LambdaMetricsProcessor(List<MetricType> metricTypes,
-                                  Set<String> excludeMetrics) {
+    LambdaMetricsProcessor(List<MetricType> metricTypes,
+                                  Set<String> excludeMetrics, List<String> includeLambdaFunctions) {
         this.metricTypes = metricTypes;
         this.excludeMetricsPattern = MetricsProcessorHelper.createPattern(excludeMetrics);
+        this.includeLambdaFunctions = includeLambdaFunctions;
     }
 
-    public List<Metric> getMetrics(AmazonCloudWatch awsCloudWatch) {
+    public List<Metric> getMetrics(AmazonCloudWatch awsCloudWatch, String accountName) {
+        List<DimensionFilter> dimensions = new ArrayList<DimensionFilter>();
+
+        DimensionFilter dimensionFilter = new DimensionFilter();
+        dimensionFilter.withName(DIMENSIONS);
+
+        dimensions.add(dimensionFilter);
+
+        LambdaFunctionMatcherPredicate predicate = new LambdaFunctionMatcherPredicate(includeLambdaFunctions);
         return MetricsProcessorHelper.getFilteredMetrics(awsCloudWatch,
                 NAMESPACE,
                 excludeMetricsPattern,
-                DIMENSIONS);
+                dimensions,
+                predicate);
     }
 
     public StatisticType getStatisticType(Metric metric) {
@@ -46,7 +55,7 @@ public class LambdaMetricsProcessor implements MetricsProcessor {
 
     public Map<String, Double> createMetricStatsMapForUpload(NamespaceMetricStatistics namespaceMetricStats) {
         Map<String, String> dimensionToMetricPathNameDictionary = new HashMap<String, String>();
-        dimensionToMetricPathNameDictionary.put(DIMENSIONS[0], "Function Name");
+        dimensionToMetricPathNameDictionary.put(DIMENSIONS, "Function Name");
 
 
         return MetricsProcessorHelper.createMetricStatsMapForUpload(namespaceMetricStats,

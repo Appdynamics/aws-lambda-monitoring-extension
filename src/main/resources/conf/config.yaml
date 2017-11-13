@@ -1,7 +1,7 @@
 accounts:
   - awsAccessKey: ""
     awsSecretKey: ""
-    displayAccountName: ""
+    displayAccountName: "AppD"
     
     # Regions where elastiCache is registered
     # Allowed values: ap-southeast-1, ap-southeast-2, ap-northeast-1, eu-central-1, 
@@ -12,7 +12,10 @@ accounts:
 credentialsDecryptionConfig:
     enableDecryption: "false"
     decryptionKey:
-    
+
+#Metrics will be extracted only from the following lambda functions. Regexes are supported.
+includeLambdaFunctions: [".*"]
+
 proxyConfig:
     host:
     port:

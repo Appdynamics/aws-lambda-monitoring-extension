@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appdynamics.extensions</groupId>
 	<artifactId>aws-lambda-monitoring-extension</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>AWS Lambda Monitoring Extension</name>
 	
 	<properties>
@@ -22,7 +22,7 @@
 		<dependency>
 			<groupId>com.appdynamics.extensions</groupId>
 			<artifactId>aws-cloudwatch-exts-commons</artifactId>
-			<version>1.0.1</version>
+			<version>1.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
