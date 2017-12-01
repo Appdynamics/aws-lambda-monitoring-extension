@@ -19,7 +19,7 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<LambdaConfig
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon Lambda", METRIC_PATH_SEPARATOR);
 
-    LambdaMonitor() {
+    public LambdaMonitor() {
         super(LambdaConfiguration.class);
         LOGGER.info(String.format("Using AWS Lambda Monitor Version [%s]",
                 this.getClass().getPackage().getImplementationTitle()));
