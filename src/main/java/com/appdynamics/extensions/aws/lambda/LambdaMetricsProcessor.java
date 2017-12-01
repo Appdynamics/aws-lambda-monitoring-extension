@@ -25,7 +25,7 @@ public class LambdaMetricsProcessor implements MetricsProcessor {
     private Pattern excludeMetricsPattern;
     private List<String> includeLambdaFunctions;
 
-    LambdaMetricsProcessor(List<MetricType> metricTypes,
+    public LambdaMetricsProcessor(List<MetricType> metricTypes,
                                   Set<String> excludeMetrics, List<String> includeLambdaFunctions) {
         this.metricTypes = metricTypes;
         this.excludeMetricsPattern = MetricsProcessorHelper.createPattern(excludeMetrics);
