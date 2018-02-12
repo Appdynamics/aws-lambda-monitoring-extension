@@ -1,12 +1,30 @@
+/*
+ * Copyright 2018. AppDynamics LLC and its affiliates.
+ * All Rights Reserved.
+ * This is unpublished proprietary source code of AppDynamics LLC and its affiliates.
+ * The copyright notice above does not evidence any actual or intended publication of such source code.
+ *
+ */
+
 package com.appdynamics.extensions.aws.lambda;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.lambda.config.LambdaConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.appdynamics.extensions.aws.Constants.CONFIG_ARG;
+import static com.appdynamics.extensions.aws.Constants.CONFIG_REGION_ENDPOINTS_ARG;
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
@@ -57,4 +75,31 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<LambdaConfig
                 config.getMetricsConfig().getExcludeMetrics(),
                 config.getIncludeLambdaFunctions());
     }
+
+    public static void main(String[] args) throws TaskExecutionException {
+        ConsoleAppender ca = new ConsoleAppender();
+        ca.setWriter(new OutputStreamWriter(System.out));
+        ca.setLayout(new PatternLayout("%-5p [%t]: %m%n"));
+        ca.setThreshold(Level
+                .DEBUG);
+        LOGGER.getRootLogger().addAppender(ca);
+
+
+        /*FileAppender fa = new FileAppender(new PatternLayout("%-5p [%t]: %m%n"), "cache.log");
+        fa.setThreshold(Level.DEBUG);
+        LOGGER.getRootLogger().addAppender(fa);*/
+
+
+        LambdaMonitor monitor = new LambdaMonitor();
+
+
+        Map<String, String> taskArgs = new HashMap<String, String>();
+        taskArgs.put(CONFIG_ARG, "/Users/aditya.jagtiani/repos/appdynamics/extensions/aws-lambda-monitoring-extension/src/main/resources/conf/config.yaml");
+        taskArgs.put(CONFIG_REGION_ENDPOINTS_ARG, "/Users/aditya.jagtiani/repos/appdynamics/extensions/aws-lambda-monitoring-extension/src/main/resources/conf/region-endpoints.yaml");
+        monitor.execute(taskArgs, null);
+    }
+
+
+
+
 }
