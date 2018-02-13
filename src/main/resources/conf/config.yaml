@@ -1,6 +1,6 @@
 accounts:
-  - awsAccessKey: "AKIAITBHKPLHDHU3XWNA"
-    awsSecretKey: "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"
+  - awsAccessKey: ""
+    awsSecretKey: ""
     displayAccountName: "cs-appdynamics"
     
     # Regions where elastiCache is registered
