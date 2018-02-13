@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appdynamics.extensions</groupId>
 	<artifactId>aws-lambda-monitoring-extension</artifactId>
-	<version>1.0.1</version>
+	<version>1.0.3</version>
 	<name>AWS Lambda Monitoring Extension</name>
 	
 	<properties>
@@ -117,6 +117,8 @@
 									<fileset dir="src/main/resources/conf" includes="monitor.xml" />
 									<fileset dir="src/main/resources" includes="conf/config.yaml" />
 									<fileset dir="src/main/resources" includes="conf/region-endpoints.yaml" />
+									<fileset dir="${project.basedir}" includes="LICENSE.txt"/>
+									<fileset dir="${project.basedir}" includes="NOTICE.txt"/>
 								</copy>
 								<copy todir="${target.dir}">
 									<fileset dir="${build.directory}" includes="${project.artifactId}.${project.packaging}" />
