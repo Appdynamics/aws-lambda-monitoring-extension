@@ -12,9 +12,19 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.lambda.config.LambdaConfiguration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
+import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PatternLayout;
 
+import java.io.OutputStreamWriter;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.appdynamics.extensions.aws.Constants.CONFIG_ARG;
+import static com.appdynamics.extensions.aws.Constants.CONFIG_REGION_ENDPOINTS_ARG;
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
