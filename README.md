@@ -1,20 +1,20 @@
-#AWS Lambda Monitoring Extension
+# AWS Lambda Monitoring Extension
 
-##Use Case
+## Use Case
 Captures Lambda statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
 
-**Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).** 
+**Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).**
 
-##Installation
+## Installation
 
 1. Run 'mvn clean install' from aws-lambda-monitoring-extension
 2. Copy and unzip AWSLambdaMonitor-\<version\>.zip from 'target' directory into \<machine_agent_dir\>/monitors/
 3. Edit config.yaml file in AWSLambdaMonitor/conf and provide the required configuration (see Configuration section)
 4. Restart the Machine Agent.
 
-##Configuration
+## Configuration
 
-###config.yaml
+### config.yaml
 
 **Note: Please avoid using tab (\t) when editing yaml files. You may want to validate the yaml file using a [yaml validator](http://yamllint.com/).**
 
@@ -60,18 +60,18 @@ accounts:
     awsSecretKey: "XXXXXXXXXX1"
     displayAccountName: "TestAccount_1"
     regions: ["us-east-1","us-west-1","us-west-2"]
-    
+
   - awsAccessKey: "XXXXXXXX2"
     awsSecretKey: "XXXXXXXXXX2"
     displayAccountName: "TestAccount_2"
     regions: ["eu-central-1","eu-west-1"]
-    
+
 credentialsDecryptionConfig:
     enableDecryption: "false"
     decryptionKey:
-    
+
 proxyConfig:
-    host: 
+    host:
     port:
     username:
     password:    
@@ -80,7 +80,7 @@ metricsConfig:
     metricTypes:
       - metricName: "CurrItems"
         statType: "max"
-        
+
       - metricName: "DecrHits"
         statType: "sum"        
 
@@ -100,7 +100,7 @@ concurrencyConfig:
 metricPrefix: "Custom Metrics|Amazon Lambda|"
 ~~~
 
-###AWS Credentials Encryption
+### AWS Credentials Encryption
 To set an encrypted awsAccessKey and awsSecretKey in config.yaml, follow the steps below:
 
 1. Download the util jar to encrypt the AWS Credentials from [here](https://github.com/Appdynamics/maven-repo/blob/master/releases/com/appdynamics/appd-exts-commons/1.1.2/appd-exts-commons-1.1.2.jar).
@@ -108,28 +108,28 @@ To set an encrypted awsAccessKey and awsSecretKey in config.yaml, follow the ste
 
    	~~~   
    	java -cp appd-exts-commons-1.1.2.jar com.appdynamics.extensions.crypto.Encryptor EncryptionKey CredentialToEncrypt
-   	
-   	For example: 
+
+   	For example:
    	java -cp "appd-exts-commons-1.1.2.jar" com.appdynamics.extensions.crypto.Encryptor test myAwsAccessKey
-   	
+
    	java -cp "appd-exts-commons-1.1.2.jar" com.appdynamics.extensions.crypto.Encryptor test myAwsSecretKey
    	~~~
-   	
+
 3. Set the decryptionKey field in config.yaml with the encryption key used, as well as the resulting encrypted awsAccessKey and awsSecretKey in their respective fields.
 
-##Metrics
+## Metrics
 Typical metric path: **Application Infrastructure Performance|\<Tier\>|Custom Metrics|Amazon Lambda|\<Account Name\>|\<Region\>|Function Name|\<Function Name\>** followed by the metrics defined in the link below:
 
 - [Lambda Metrics](http://docs.aws.amazon.com/AmazonCloudWatch/latest/DeveloperGuide/lam-metricscollected.html)
 
-##Contributing
+## Contributing
 
 Always feel free to fork and contribute any changes directly via [GitHub](https://github.com/Appdynamics/aws-lambda-monitoring-extension).
 
-##Community
+## Community
 
 Find out more in the [AppSphere](https://www.appdynamics.com/community/exchange/extension/aws-lambda-monitoring-extension) community.
 
-##Support
+## Support
 
 For any questions or feature request, please contact [AppDynamics Center of Excellence](mailto:help@appdynamics.com).
