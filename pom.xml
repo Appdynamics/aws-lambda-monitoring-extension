@@ -10,7 +10,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.appdynamics.extensions</groupId>
 	<artifactId>aws-lambda-monitoring-extension</artifactId>
-	<version>1.0.4</version>
+	<version>2.0.0</version>
 	<name>AWS Lambda Monitoring Extension</name>
 	
 	<properties>
@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>com.appdynamics.extensions</groupId>
 			<artifactId>aws-cloudwatch-exts-commons</artifactId>
-			<version>1.0.6</version>
+			<version>2.0.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -50,6 +50,12 @@
 			<version>1.4.7</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.yaml</groupId>
+			<artifactId>snakeyaml</artifactId>
+			<version>1.13</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -60,8 +66,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.5</source>
-					<target>1.5</target>
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -103,6 +109,7 @@
 								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<manifestEntries>
 										<Implementation-Title>AWS Lambda Monitor v${project.version} Build Date ${maven.build.timestamp}</Implementation-Title>
+										<Main-Class>com.appdynamics.extensions.workbench.WorkbenchServerLauncher</Main-Class>
 									</manifestEntries>
 								</transformer>
 							</transformers>
@@ -123,8 +130,7 @@
 								<mkdir dir="${target.dir}" />
 								<copy todir="${target.dir}">
 									<fileset dir="src/main/resources/conf" includes="monitor.xml" />
-									<fileset dir="src/main/resources" includes="conf/config.yaml" />
-									<fileset dir="src/main/resources" includes="conf/region-endpoints.yaml" />
+									<fileset dir="src/main/resources" includes="conf/config.yml" />
 									<fileset dir="${project.basedir}" includes="LICENSE.txt"/>
 									<fileset dir="${project.basedir}" includes="NOTICE.txt"/>
 								</copy>

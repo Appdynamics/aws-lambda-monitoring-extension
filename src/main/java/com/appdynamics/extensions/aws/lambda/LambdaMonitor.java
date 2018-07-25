@@ -10,10 +10,9 @@ package com.appdynamics.extensions.aws.lambda;
 
 import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
-import com.appdynamics.extensions.aws.lambda.config.LambdaConfiguration;
+import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
-import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -23,37 +22,50 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.appdynamics.extensions.aws.Constants.CONFIG_ARG;
-import static com.appdynamics.extensions.aws.Constants.CONFIG_REGION_ENDPOINTS_ARG;
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
- * @author Satish Muddam
+ * @author Satish Muddam, Prashant Mehta
  */
-public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<LambdaConfiguration> {
+public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> {
 
-    private static final Logger LOGGER = Logger.getLogger("com.singularity.extensions.aws.LambdaMonitor");
+    private static final Logger LOGGER = Logger.getLogger("LambdaMonitor.class");
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon Lambda", METRIC_PATH_SEPARATOR);
 
     public LambdaMonitor() {
-        super(LambdaConfiguration.class);
+        super(Configuration.class);
         LOGGER.info(String.format("Using AWS Lambda Monitor Version [%s]",
                 this.getClass().getPackage().getImplementationTitle()));
     }
 
     @Override
-    protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(
-            LambdaConfiguration config) {
+    public String getDefaultMetricPrefix() {
+        return DEFAULT_METRIC_PREFIX;
+    }
+
+    @Override
+    public String getMonitorName() {
+        return "LambdaMonitor";
+    }
+
+    @Override
+    protected int getTaskCount() {
+                return 3;
+           }
+
+    @Override
+    protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(Configuration config) {
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
 
         return new NamespaceMetricStatisticsCollector
                 .Builder(config.getAccounts(),
                 config.getConcurrencyConfig(),
                 config.getMetricsConfig(),
-                metricsProcessor)
-                .withCredentialsEncryptionConfig(config.getCredentialsDecryptionConfig())
+                metricsProcessor,
+                config.getMetricPrefix())
+                .withCredentialsDecryptionConfig(config.getCredentialsDecryptionConfig())
                 .withProxyConfig(config.getProxyConfig())
                 .build();
     }
@@ -63,16 +75,26 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<LambdaConfig
         return LOGGER;
     }
 
-    @Override
-    protected String getMetricPrefix(LambdaConfiguration config) {
-        return StringUtils.isNotBlank(config.getMetricPrefix()) ?
-                config.getMetricPrefix() : DEFAULT_METRIC_PREFIX;
+    private MetricsProcessor createMetricsProcessor(Configuration config) {
+        return new LambdaMetricsProcessor(
+                config.getMetricsConfig().getIncludeMetrics(),
+                config.getDimensions());
     }
 
-    private MetricsProcessor createMetricsProcessor(LambdaConfiguration config) {
-        return new LambdaMetricsProcessor(
-                config.getMetricsConfig().getMetricTypes(),
-                config.getMetricsConfig().getExcludeMetrics(),
-                config.getIncludeLambdaFunctions());
+    public static void main(String[] args) throws TaskExecutionException {
+
+        ConsoleAppender ca = new ConsoleAppender();
+        ca.setWriter(new OutputStreamWriter(System.out));
+        ca.setLayout(new PatternLayout("%-5p [%t]: %m%n"));
+        ca.setThreshold(Level.DEBUG);
+
+        LOGGER.getRootLogger().addAppender(ca);
+
+        LambdaMonitor monitor = new LambdaMonitor();
+
+        final Map<String, String> taskArgs = new HashMap<String, String>();
+
+        taskArgs.put("config-file", "src/main/resources/conf/config.yml");
+        monitor.execute(taskArgs, null);
     }
 }
