@@ -3,7 +3,7 @@ accounts:
     awsSecretKey: ""
     displayAccountName: ""
     
-    # Regions where elastiCache is registered
+    # Regions where lambda function is deployed
     # Allowed values: ap-southeast-1, ap-southeast-2, ap-northeast-1, eu-central-1, 
     #                 us-east-1, eu-west-1, us-west-1, us-west-2, sa-east-1
     #
@@ -21,9 +21,9 @@ proxyConfig:
 
 #Filters based on dimensions, values accepts comma separated values and regex patterns. If `.*` is used, all are monitored and if empty, none are monitored
 dimensions:
-  - name: "FunctionName"
-    displayName: "Zendesk-Demo"
-    values: ["Zendesk-Demo"]
+  - name: ""
+    displayName: ""
+    values: []
 
 #Allowed values are Basic and Detailed. Refer https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html for more information
 # Basic will fire CloudWatch API calls every 5 minutes

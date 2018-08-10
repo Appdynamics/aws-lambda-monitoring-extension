@@ -13,6 +13,11 @@ proxyConfig:
     port: 8081
     username:
     password:
+#Filters based on dimensions, values accepts comma separated values and regex patterns. If `.*` is used, all are monitored and if empty, none are monitored
+dimensions:
+  - name: "FunctionName"
+    displayName: "Zendesk-Demo"
+    values: ["Zendesk-Demo"]
 
 #Allowed values are Basic and Detailed. Refer https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html for more information
 # Basic will fire CloudWatch API calls every 5 minutes
@@ -30,9 +35,6 @@ metricsConfig:
         timeRollUpType: "AVERAGE"
         clusterRollUpType: "INDIVIDUAL"
 
-    metricsTimeRange:
-      startTimeInMinsBeforeNow: 5
-      endTimeInMinsBeforeNow: 0
     metricsTimeRange:
       startTimeInMinsBeforeNow: 5
       endTimeInMinsBeforeNow: 0
