@@ -25,9 +25,9 @@ proxyConfig:
 
 #Filters based on dimensions, values accepts comma separated values and regex patterns. If `.*` is used, all are monitored and if empty, none are monitored
 dimensions:
-  - name: ""
-    displayName: ""
-    values: []
+  - name: "FunctionName"
+    displayName: "MyFunctionDemoTest"
+    values: ["MyFunctionDemoTest"]
 
 #Allowed values are Basic and Detailed. Refer https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch-new.html for more information
 # Basic will fire CloudWatch API calls every 5 minutes

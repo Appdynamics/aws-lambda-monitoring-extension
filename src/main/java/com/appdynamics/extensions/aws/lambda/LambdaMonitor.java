@@ -72,8 +72,7 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getDimensions());
     }
-
-    /*
+/*
     public static void main(String[] args) throws TaskExecutionException {
 
         ConsoleAppender ca = new ConsoleAppender();
@@ -87,7 +86,7 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
 
         final Map<String, String> taskArgs = new HashMap<String, String>();
 
-        taskArgs.put("config-file", "src/main/resources/conf/config.yml");
+        taskArgs.put("config-file", "src/main/resources/config.yml");
         monitor.execute(taskArgs, null);
     }
     */
