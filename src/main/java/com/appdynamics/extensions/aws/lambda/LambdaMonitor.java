@@ -12,15 +12,7 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
-import com.singularity.ee.agent.systemagent.api.exception.TaskExecutionException;
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
-
-import java.io.OutputStreamWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
@@ -52,8 +44,8 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
 
     @Override
     protected int getTaskCount() {
-                return 3;
-           }
+        return 3;
+    }
 
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(Configuration config) {
@@ -81,6 +73,7 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
                 config.getDimensions());
     }
 
+    /*
     public static void main(String[] args) throws TaskExecutionException {
 
         ConsoleAppender ca = new ConsoleAppender();
@@ -97,4 +90,5 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
         taskArgs.put("config-file", "src/main/resources/conf/config.yml");
         monitor.execute(taskArgs, null);
     }
+    */
 }

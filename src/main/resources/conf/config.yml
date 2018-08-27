@@ -1,3 +1,7 @@
+#prefix used to show metrics in AppDynamics
+metricPrefix: "Server|Component:<TIER_ID>|Custom Metrics|AWS Lambda Monitor|"
+#metricPrefix: "Custom Metrics|AWS Lambda Monitor|"
+
 accounts:
   - awsAccessKey: ""
     awsSecretKey: ""
@@ -49,7 +53,7 @@ metricsConfig:
         statType: "ave"
         delta: false
         multiplier: 1
-        aggregationType: "AVERAGE"
+        aggregationType: "SUM"
         timeRollUpType: "AVERAGE"
         clusterRollUpType: "INDIVIDUAL"
       - name: "Errors"
@@ -57,7 +61,7 @@ metricsConfig:
         statType: "ave"
         delta: false
         multiplier: 1
-        aggregationType: "AVERAGE"
+        aggregationType: "SUM"
         timeRollUpType: "AVERAGE"
         clusterRollUpType: "INDIVIDUAL"
       - name: "Dead Letter Error"
@@ -65,7 +69,7 @@ metricsConfig:
         statType: "ave"
         delta: false
         multiplier: 1
-        aggregationType: "AVERAGE"
+        aggregationType: "SUM"
         timeRollUpType: "AVERAGE"
         clusterRollUpType: "INDIVIDUAL"
       - name: "Duration"
@@ -81,7 +85,7 @@ metricsConfig:
         statType: "ave"
         delta: false
         multiplier: 1
-        aggregationType: "AVERAGE"
+        aggregationType: "SUM"
         timeRollUpType: "AVERAGE"
         clusterRollUpType: "INDIVIDUAL"
       - name: "IteratorAge"
@@ -110,7 +114,7 @@ metricsConfig:
         clusterRollUpType: "INDIVIDUAL"
 
     metricsTimeRange:
-      startTimeInMinsBeforeNow: 60
+      startTimeInMinsBeforeNow: 5
       endTimeInMinsBeforeNow: 0
 
     # Rate limit ( per second ) for GetMetricStatistics, default value is 400. https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_limits.html
@@ -147,7 +151,3 @@ regionEndPoints:
   eu-west-3 : monitoring.eu-west-3.amazonaws.com
   sa-east-1 : monitoring.sa-east-1.amazonaws.com
   us-gov-west-1 : monitoring.us-gov-west-1.amazonaws.com
-
-#prefix used to show metrics in AppDynamics
-metricPrefix: "Server|Component:<TIER_ID>|Custom Metrics|AWS Lambda Monitor|"
-#metricPrefix: "Custom Metrics|AWS Lambda Monitor|"
