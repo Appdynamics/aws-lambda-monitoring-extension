@@ -14,6 +14,11 @@ import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
 
 /**
@@ -43,10 +48,12 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
     }
 
     @Override
-    protected int getTaskCount() {
-        return 3;
+    protected List<Map<String, ?>> getServers() {
+        Map<String, String> serversMap = new HashMap<String, String>();
+        List<Map<String, ?>> serversList = new ArrayList<Map<String, ?>>();
+        serversList.add(serversMap);
+        return serversList;
     }
-
     @Override
     protected NamespaceMetricStatisticsCollector getNamespaceMetricsCollector(Configuration config) {
         MetricsProcessor metricsProcessor = createMetricsProcessor(config);
