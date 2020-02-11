@@ -16,7 +16,7 @@ The extension needs to be able to connect to the HAProxy in order to collect and
 
 **Note : This extension is compatible with Machine Agent version 4.5.13 or later.
 
-* If you are seeing warning messages while starting the Machine Agent, update the http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs to httpclient-4.5.9 and httpcore-4.4.12 in monitorsLibs to make this warning go away.                                                                                                            
+* If you are seeing warning messages while starting the Machine Agent, update the http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs to httpclient-4.5.9 and httpcore-4.4.12 to make this warning go away.                                                                                                            
 * To make AWS extensions work on Machine Agent < 4.5.13: 
   The http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs has to be manually be updated to httpclient-4.5.9 and httpcore-4.4.12
 
