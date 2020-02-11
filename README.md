@@ -13,7 +13,8 @@ Please give the following permissions to the account being used to with the exte
 ```
 In order to use this extension, you do need a [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
 The extension needs to be able to connect to the HAProxy in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
-**This extension is compatible with Machine Agent version 4.5.13 or later.
+
+**Note : This extension is compatible with Machine Agent version 4.5.13 or later.
 
 * If you are seeing warning messages while starting the Machine Agent, update the http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs to httpclient-4.5.9 and httpcore-4.4.12 in monitorsLibs to make this warning go away.                                                                                                            
 * To make AWS extensions work on Machine Agent < 4.5.13: 
