@@ -1,7 +1,7 @@
 # AWS Lambda Monitoring Extension
 
 ## Use Case
-AWS LAmbda Monitoring Extension captures Lambda statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
+AWS Lambda Monitoring Extension captures Lambda statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
 **Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).**
 
 ## Prerequisites
@@ -12,8 +12,13 @@ Please give the following permissions to the account being used to with the exte
   **cloudwatch:GetMetricStatistics**
 ```
 In order to use this extension, you do need a [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
-The extension needs to be able to connect to the HAProxy in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
+The extension needs to be able to connect to the AWS Lamda in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
+**Note : This extension is compatible with Machine Agent version 4.5.13 or later.
+
+* If you are seeing warning messages while starting the Machine Agent, update the http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs to httpclient-4.5.9 and httpcore-4.4.12 to make this warning go away.                                                                                                            
+* To make AWS extensions work on Machine Agent < 4.5.13: 
+  The http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs has to be manually be updated to httpclient-4.5.9 and httpcore-4.4.12
 
 ## Installation
 1. Run 'mvn clean install' from aws-lambda-monitoring-extension
@@ -215,8 +220,8 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 ## Version
    |          Name            |  Version   |
    |--------------------------|------------|
-   |Extension Version         |2.0.1       |
+   |Extension Version         |2.0.2      |
    |Controller Compatibility  |4.4 or Later|
-   |Last Update               |22nd Mar, 2019 |
-
+   |Agent Compatibility        | 4.5.13 or later|
+   |Last Update               |04 Feb, 2020 |
 List of changes to this extension can be found [here](https://github.com/Appdynamics/aws-lambda-monitoring-extension/blob/master/CHANGELOG.md)
