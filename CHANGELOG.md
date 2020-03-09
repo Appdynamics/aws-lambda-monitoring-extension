@@ -1,5 +1,6 @@
 #### 2.0.3
     1. Added controllerInfo section and health check flag in config.yml
+    2. Updated aws-cloudwatch-exts-commons to 2.2.1
  
 ### 2.0.2
     1. Updated aws-cloudwatch-exts-commons 2.0.0 to 2.2.0
