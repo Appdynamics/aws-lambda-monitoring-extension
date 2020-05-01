@@ -12,7 +12,9 @@ import com.appdynamics.extensions.aws.SingleNamespaceCloudwatchMonitor;
 import com.appdynamics.extensions.aws.collectors.NamespaceMetricStatisticsCollector;
 import com.appdynamics.extensions.aws.config.Configuration;
 import com.appdynamics.extensions.aws.metric.processors.MetricsProcessor;
-import org.apache.log4j.Logger;
+import com.appdynamics.extensions.logging.ExtensionsLoggerFactory;
+import org.slf4j.Logger;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,7 @@ import static com.appdynamics.extensions.aws.Constants.METRIC_PATH_SEPARATOR;
  */
 public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuration> {
 
-    private static final Logger LOGGER = Logger.getLogger("LambdaMonitor.class");
+    private static final Logger LOGGER = ExtensionsLoggerFactory.getLogger("LambdaMonitor.class");
 
     private static final String DEFAULT_METRIC_PREFIX = String.format("%s%s%s%s",
             "Custom Metrics", METRIC_PATH_SEPARATOR, "Amazon Lambda", METRIC_PATH_SEPARATOR);
@@ -69,15 +71,15 @@ public class LambdaMonitor extends SingleNamespaceCloudwatchMonitor<Configuratio
                 .build();
     }
 
-    @Override
-    protected Logger getLogger() {
-        return LOGGER;
-    }
-
     private MetricsProcessor createMetricsProcessor(Configuration config) {
         return new LambdaMetricsProcessor(
                 config.getMetricsConfig().getIncludeMetrics(),
                 config.getDimensions());
+    }
+
+    @Override
+    protected Logger getLogger() {
+        return LOGGER;
     }
 /*
     public static void main(String[] args) throws TaskExecutionException {

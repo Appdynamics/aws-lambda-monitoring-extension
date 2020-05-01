@@ -220,8 +220,8 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
 ## Version
    |          Name            |  Version   |
    |--------------------------|------------|
-   |Extension Version         |2.0.3      |
+   |Extension Version         |2.0.4      |
    |Controller Compatibility  |4.4 or Later|
    |Agent Compatibility        | 4.5.13 or later|
-   |Last Update               |09 March, 2020 |
+   |Last Update               |29 Apr, 2020 |
 List of changes to this extension can be found [here](https://github.com/Appdynamics/aws-lambda-monitoring-extension/blob/master/CHANGELOG.md)
