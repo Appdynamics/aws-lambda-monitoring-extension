@@ -171,5 +171,3 @@ controllerInfo:
   applicationName: "" # -Dappdynamics.agent.applicationName
   tierName: "" # -Dappdynamics.agent.tierName
   nodeName: "" # -Dappdynamics.agent.nodeName
-
-enableHealthChecks: true # If not set, will be retrieved from "-Dappdynamics.agent.monitors.healthchecks.enable=true". Defaults to true.
