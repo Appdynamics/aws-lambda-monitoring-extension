@@ -1,3 +1,6 @@
+# 2.0.5
+    1. Updated aws-cloudwatch-exts-commons to 2.2.4
+
 #### 2.0.4
     1. Updated aws-cloudwatch-exts-commons to 2.2.3
 
