@@ -171,3 +171,6 @@ controllerInfo:
   applicationName: "" # -Dappdynamics.agent.applicationName
   tierName: "" # -Dappdynamics.agent.tierName
   nodeName: "" # -Dappdynamics.agent.nodeName
+
+#Encryption key for your controllerInfo password
+encryptionKey: ""
