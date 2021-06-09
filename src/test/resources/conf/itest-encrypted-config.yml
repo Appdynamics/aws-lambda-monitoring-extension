@@ -70,3 +70,6 @@ regionEndPoints:
   us-gov-west-1 : monitoring.us-gov-west-1.amazonaws.com
 
 metricPrefix: "Custom Metrics|Amazon Lambda|"
+
+#Encryption key for your controllerInfo password
+encryptionKey: ""
