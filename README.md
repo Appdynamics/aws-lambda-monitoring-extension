@@ -2,19 +2,18 @@
 
 ## Use Case
 AWS Lambda Monitoring Extension captures Lambda statistics from Amazon CloudWatch and displays them in the AppDynamics Metric Browser.
-**Note : By default, the Machine agent can only send a fixed number of metrics to the controller. This extension potentially reports thousands of metrics, so to change this limit, please follow the instructions mentioned [here](https://docs.appdynamics.com/display/PRO40/Metrics+Limits).**
 
 ## Prerequisites
 
-Please give the following permissions to the account being used to with the extension.
+1. Please give the following permissions to the account being used to with the extension.
 ```
   **cloudwatch:ListMetrics**
   **cloudwatch:GetMetricStatistics**
 ```
-In order to use this extension, you do need a [Standalone JAVA Machine Agent](https://docs.appdynamics.com/display/PRO44/Standalone+Machine+Agents) or [SIM Agent](https://docs.appdynamics.com/display/PRO44/Server+Visibility).  For more details on downloading these products, please  visit [here](https://download.appdynamics.com/).
-The extension needs to be able to connect to the AWS Lamda in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
+2. Before the extension is installed, the prerequisites mentioned [here](https://community.appdynamics.com/t5/Knowledge-Base/Extensions-Prerequisites-Guide/ta-p/35213) need to be met. Please do not proceed with the extension installation if the specified prerequisites are not met.
+3. The extension needs to be able to connect to the AWS Lamda in order to collect and send metrics. To do this, you will have to either establish a remote connection in between the extension and the product, or have an agent on the same machine running the product in order for the extension to collect and send the metrics.
 
-**Note : This extension is compatible with Machine Agent version 4.5.13 or later.
+** Note : Running the extension with Machine Agent version 4.5.13 or later.
 
 * If you are seeing warning messages while starting the Machine Agent, update the http-client and http-core JARs in {MACHINE_AGENT_HOME}/monitorsLibs to httpclient-4.5.9 and httpcore-4.4.12 to make this warning go away.                                                                                                            
 * To make AWS extensions work on Machine Agent < 4.5.13: 
@@ -27,18 +26,19 @@ The extension needs to be able to connect to the AWS Lamda in order to collect a
 4. Restart the Machine Agent.
 
 Please place the extension in the **"monitors"** directory of your **Machine Agent** installation directory. Do not place the extension in the **"extensions"** directory of your **Machine Agent** installation directory.
-In the AppDynamics Metric Browser, look for **Application Infrastructure Performance|\<Tier\>|Custom Metrics|AWS Lambda Monitor** and you should be able to see all the metrics.
 
 ## Configuration
 In order to use the extension, you need to update the config.yml file that is present in the extension folder. The following is an explanation of the configurable fields that are present in the config.yml file.
 All Lambda metrics are available under the namespace AWS/Lambda and provide metrics for a single dimension, the "FunctionName". When retrieving metrics, you must supply both the Value/s for the dimension.
 
 1. If SIM is enabled, then use the following metricPrefix `metricPrefix: "Custom Metrics|AWS Lambda Monitor"` else configure the "COMPONENT_ID" under which the metrics need to be reported.
-This can be done by changing the value of <COMPONENT_ID> in `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|AWS Lambda Monitor|"`.
+This can be done by changing the value of <COMPONENT_ID> in `metricPrefix: "Server|Component:<COMPONENT_ID>|Custom Metrics|AWS Lambda Monitor|"`.<br/>
    For example,
      ```
      metricPrefix: "Server|Component:100|Custom Metrics|AWS Lambda Monitor|"
      ```
+More details around metric prefix can be found [here](https://community.appdynamics.com/t5/Knowledge-Base/How-do-I-troubleshoot-missing-custom-metrics-or-extensions/ta-p/28695).
+
 2. Provide accessKey(required) and secretKey(required) of AWS account(s), also provide displayAccountName(any name that represents your account) and regions(required).
 
    ```
@@ -79,9 +79,9 @@ Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provid
      | :---------------- | :-------------- | :------------------------------ | :------------------------------------------------------------------------------------------------------------- |
      | alias             | metric name     | Any string                      | The substitute name to be used in the metric browser instead of metric name.                                   |
      | statType          | "ave"           | "AVERAGE", "SUM", "MIN", "MAX"  | AWS configured values as returned by API                                                                       |
-     | aggregationType   | "AVERAGE"       | "AVERAGE", "SUM", "OBSERVATION" | [Aggregation qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)    |
-     | timeRollUpType    | "AVERAGE"       | "AVERAGE", "SUM", "CURRENT"     | [Time roll-up qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)   |
-     | clusterRollUpType | "INDIVIDUAL"    | "INDIVIDUAL", "COLLECTIVE"      | [Cluster roll-up qualifier](https://docs.appdynamics.com/display/PRO44/Build+a+Monitoring+Extension+Using+Java)|
+     | aggregationType   | "AVERAGE"       | "AVERAGE", "SUM", "OBSERVATION" | [Aggregation qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)    |
+     | timeRollUpType    | "AVERAGE"       | "AVERAGE", "SUM", "CURRENT"     | [Time roll-up qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)   |
+     | clusterRollUpType | "INDIVIDUAL"    | "INDIVIDUAL", "COLLECTIVE"      | [Cluster roll-up qualifier](https://docs.appdynamics.com/display/latest/Build+a+Monitoring+Extension+Using+Java)|
      | multiplier        | 1               | Any number                      | Value with which the metric needs to be multiplied.                                                            |
      | convert           | null            | Any key value map               | Set of key value pairs that indicates the value to which the metrics need to be transformed. eg: UP:0, DOWN:1  |
      | delta             | false           | true, false                     | If enabled, gives the delta values of metrics instead of actual values.                                        |
@@ -98,10 +98,11 @@ Configure "enableDecryption" of "credentialsDecryptionConfig" to true and provid
         clusterRollUpType: "INDIVIDUAL"
     ```
 
-    **All these metric properties are optional, and the default value shown in the table is applied to the metric(if a property has not been specified) by default.**
-###config.yml
+**All these metric properties are optional, and the default value shown in the table is applied to the metric(if a property has not been specified) by default.**
 
-Please avoid using tab (\t) when editing yaml files. Please copy all the contents of the config.yml file and go to [Yaml Validator](http://www.yamllint.com/) . On reaching the website, paste the contents and press the “Go” button on the bottom left.
+### config.yml
+
+Please avoid using tab (\t) when editing yaml files. Please copy all the contents of the config.yml file and go to [Yaml Validator](https://jsonformatter.org/yaml-validator) . On reaching the website, paste the contents and press the “Validate YAML” button.
 If you get a valid output, that means your formatting is correct and you may move on to the next step.
 
 **Below is an example config for monitoring multiple accounts and regions:**
@@ -206,7 +207,7 @@ Always feel free to fork and contribute any changes directly here on [GitHub](ht
    |          Name            |  Version   |
    |--------------------------|------------|
    |Extension Version         |2.0.6      |
-   |Controller Compatibility  |4.5 or Later|
-   |Agent Compatibility        | 4.5.13 or later|
-   |Last Update               |01 Jun, 2021 |
-List of changes to this extension can be found [here](https://github.com/Appdynamics/aws-lambda-monitoring-extension/blob/master/CHANGELOG.md)
+   |Last Update               |01/06/2021 |
+   |Change List               |[ChangeLog](https://github.com/Appdynamics/aws-lambda-monitoring-extension/blob/master/CHANGELOG.md)|
+   
+**Note**: While extensions are maintained and supported by customers under the open-source licensing model, they interact with agents and Controllers that are subject to [AppDynamics’ maintenance and support policy](https://docs.appdynamics.com/latest/en/product-and-release-announcements/maintenance-support-for-software-versions). Some extensions have been tested with AppDynamics 4.5.13+ artifacts, but you are strongly recommended against using versions that are no longer supported.   
